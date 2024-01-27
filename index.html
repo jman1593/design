@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>strongdogXP Games</title>
+    <style>
+        body {
+            background-color: #2e2e2e;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .search-bar {
+            padding: 5px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .categories {
+            text-align: center;
+            padding: 10px;
+            background-color: #444; /* Slightly different background for distinction */
+        }
+
+        .categories a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .card {
+            display: inline-block;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            text-decoration: none;
+            width: 120px;
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card figcaption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #888888;
+            color: white;
+            text-align: center;
+            font-size: 0.8em;
+            padding: 5px;
+            display: block;
+            transform: translateY(100%);
+            transition: transform 0.5s;
+        }
+
+        .card:hover figcaption {
+            transform: translateY(0);
+        }
+
+        .search-results {
+            position: absolute;
+            right: 20px;
+            top: 60px;
+            background-color: white;
+            color: black;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            display: none;
+        }
+
+        .search-results div {
+            padding: 5px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-results div:last-child {
+            border-bottom: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <a style="font-size:x-large; color: white;">StrongDog</a>
+            <a style="font-size:xx-large; color: darkorange;"> XP</a>
+        </div>
+        <div class="header-right">
+            <input type="text" class="search-bar" placeholder="Search games...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <div class="categories">
+        <a href="#strategy">Strategy</a>
+        <a href="#skill">Skill</a>
+        <a href="#numbers">Numbers</a>
+        <a href="#logic">Logic</a>
+        <a href="#trivia">Trivia</a>
+        <a href="#new">New</a>
+        <a href="#all">All</a>
+    </div>
+
+    <h2 style="text-align: center;"><strong>Top 10</strong></h2>
+
+    <div class="cards">
+        <a href="./html/drive-mad/index.html" class="card">
+            <img src="./img/drivemad.jpg">
+            <figcaption>drive mad</figcaption>
+        </a>
+
+        <a href="./html/eaglecraft/Offline_Download_Version.html" class="card">
+            <img src="./img/minecraft.avif">
+            <figcaption>minecraft</figcaption>
+        </a>
+
+        <a href="./html/retro bowl college/index.html" class="card">
+            <img src="./img/retro bowl college.png">
+            <figcaption>retro bowl college</figcaption>
+        </a>
+        <!-- More cards can be added here -->
+    </div>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.querySelector('.search-bar');
+        const searchResults = document.getElementById('searchResults');
+        const cards = Array.from(document.querySelectorAll('.card'));
+
+        function hideSearchResults() {
+            searchResults.style.display = 'none';
+        }
+
+        searchInput.addEventListener('input', function() {
+            const searchText = searchInput.value.toLowerCase();
+            const filteredTitles = cards
+                .map(card => card.querySelector('figcaption').textContent)
+                .filter(title => title.toLowerCase().includes(searchText))
+                .slice(0, 5); // Top 5 results
+
+            searchResults.innerHTML = ''; // Clear previous results
+            if (searchText && filteredTitles.length) {
+                searchResults.style.display = 'block';
+                filteredTitles.forEach(title => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.textContent = title;
+                    searchResults.appendChild(resultDiv);
+                });
+            } else {
+                hideSearchResults();
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+                hideSearchResults();
+            }
+        });
+    });
+</script>
+
+</html>
